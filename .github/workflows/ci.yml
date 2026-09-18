@@ -1,4 +1,4 @@
-﻿name: CI/CD Pipeline
+name: CI/CD Pipeline
 
 on:
   push:
@@ -17,7 +17,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4.1.1
       - name: Run ShellCheck
-        uses: koalaman/shellcheck-action@v0.3.1
+        uses: ludeeus/action-shellcheck@v2@v0.3.1
         with:
           scandir: './scripts'
       - name: Run Hadolint
@@ -106,3 +106,4 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           build-args: |
             BUILD_SHA=${{ github.sha }}
+

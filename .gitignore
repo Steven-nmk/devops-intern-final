@@ -1,0 +1,15 @@
+﻿# IDE and Editor Metadata
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Build artifacts
+*.tar
+*.gz
+node_modules/
+
+# Secrets or local configuration
+.env
+*.pem

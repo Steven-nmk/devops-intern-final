@@ -1,4 +1,4 @@
-﻿#!/bin/sh
+#!/bin/sh
 set -euo pipefail
 
 TARGET_URL="${1:-http://localhost:8080}"

@@ -12,9 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run ShellCheck
-        uses: ludeeus/action-shellcheck@v2
-        with:
-          scandir: './scripts'
+        run: shellcheck scripts/*.sh
 
   build:
     needs: lint

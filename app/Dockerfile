@@ -7,6 +7,9 @@ RUN mkdir -p /var/run /var/cache/nginx /var/log/nginx && \
     chown -R nginx:nginx /var/run /var/cache/nginx /var/log/nginx /etc/nginx/conf.d
 
 COPY nginx.conf /etc/nginx/nginx.conf
+
+RUN grep -nE "pid|listen" /etc/nginx/nginx.conf
+
 COPY index.html /usr/share/nginx/html/index.html
 
 RUN sed -i "s/BUILD_SHA_PLACEHOLDER/${BUILD_SHA}/g" /usr/share/nginx/html/index.html && \

@@ -1,6 +1,6 @@
-﻿variable "image_tag" {
+variable "app_tag" {
   type        = string
-  description = "The container tag of the application image in GHCR"
+  description = "The tag of the NGINX app image to deploy"
   default     = "latest"
 }
 
@@ -19,17 +19,18 @@ job "nginx-app" {
     count = 1
 
     restart {
-      attempts = 3
-      interval = "5m"
-      delay    = "15s"
+      attempts = 2
+      interval = "1m"
+      delay    = "10s"
       mode     = "fail"
     }
 
     reschedule {
-      attempts       = 5
-      interval       = "10m"
-      delay          = "30s"
+      attempts       = 3
+      interval       = "5m"
+      delay          = "15s"
       delay_function = "exponential"
+      unlimited      = false
     }
 
     network {
@@ -39,10 +40,12 @@ job "nginx-app" {
     }
 
     service {
-      name = "nginx-web"
-      port = "http"
+      name     = "nginx-app"
+      port     = "http"
+      provider = "consul"
 
       check {
+        name     = "nginx-health"
         type     = "http"
         path     = "/healthz"
         interval = "10s"
@@ -50,11 +53,11 @@ job "nginx-app" {
       }
     }
 
-    task "server" {
+    task "nginx" {
       driver = "docker"
 
       config {
-        image = "ghcr.io/your_github_handle/devops-intern-final:${var.image_tag}"
+        image = "ghcr.io/steven201nmk/nginx-app:${var.app_tag}"
         ports = ["http"]
       }
 

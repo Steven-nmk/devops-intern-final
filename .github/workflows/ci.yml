@@ -30,9 +30,9 @@ jobs:
       - name: Test Docker Container
         run: |
           docker build -t nginx-app:latest ./app
-          docker run -d -p 8080:8080 --name test-app nginx-app:latest
-          sleep 2
-          curl -f http://localhost:8080/ || exit 1
+          docker run -d -p 8080:80 --name test-app nginx-app:latest
+          sleep 3
+          curl -f http://localhost:8080/ || (docker logs test-app && exit 1)
 
   publish:
     needs: test
